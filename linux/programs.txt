@@ -1,0 +1,8 @@
+Installed programms:
+    zsh
+    oh-my-zsh
+    eza
+    zoxide
+    fzf
+    neofetch
+    git-delta

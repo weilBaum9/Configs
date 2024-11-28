@@ -1,0 +1,83 @@
+services:
+    jellyfin:
+        image: jellyfin/jellyfin
+        restart: unless-stopped
+        ports:
+            - 8096:8096
+            - 8920:8920
+            - 1900:1900
+            - 7359:7359
+        volumes:
+            - jellyfin-config:/config
+            - jellyfin-cache:/cache
+            - type: bind
+              source: /mnt/media
+              target: /media
+        networks:
+            - nginx_pm
+        environment:
+            - JELLYFIN_PublishedServerUrl=https://jellyfin.muc04.home64.de
+
+    jfa-go:
+        image: hrfee/jfa-go
+        restart: unless-stopped
+        ports:
+            - 8056:8056
+            - 8057:8057
+        volumes:
+            - jfa_data:/data
+            - /etc/localtime:/etc/localtime:ro
+        networks:
+            - nginx_pm
+
+    portainer:
+        image: portainer/portainer-ce:latest
+        restart: unless-stopped
+        ports:
+            - 9443:9443
+        volumes:
+            - portainer_data:/data
+            - /var/run/docker.sock:/var/run/docker.sock
+        networks:
+            - nginx_pm
+
+    nginx:
+        image: 'jc21/nginx-proxy-manager:latest'
+        restart: unless-stopped
+        ports:
+            - '80:80'
+            - '81:81'
+            - '443:443'
+            #- '[::921b:eff:fe3a:48c]:80:80'
+            #- '[::921b:eff:fe3a:48c]:443:443'
+        volumes:
+            - nginx_data:/data
+            - letsencrypt:/etc/letsencrypt
+        networks:
+            - nginx_pm
+
+volumes:
+    portainer_data:
+        external: true
+        name: portainer_data
+    jellyfin-config:
+        external: true
+        name: jellyfin-config
+    jellyfin-cache:
+        external: true
+        name: jellyfin-cache
+    jfa_data:
+        external: true
+        name: jfa_data
+    nginx_data:
+        external: true
+        name: nginx_data
+    letsencrypt:
+        external: true
+        name: letsencrypt
+
+networks:
+    nginx_pm:
+        external: true
+        name: nginx_pm
+

@@ -1,0 +1,27 @@
+Firefox
+	Bitwarden
+	UBlockOrigin
+	Bypass Paywalls Clean (C)
+	7TV
+	SponsorBlock für Youtube
+	FastForward
+	Enhancer For Youtube
+	Skip Redirect
+Discord
+Notepad++
+Git
+MS-Office 2019
+VS-Code
+Proton
+Java21 OpenJDK
+
+Windows Tools:
+	Everything search		(https://youtu.be/6Xg-BRA3rgQ)
+	Everything toolbar
+	Microsoft Power Toys
+		File Locksmith
+		Power Toys Run
+	
+
+Adobe Acrobat
+PDF24

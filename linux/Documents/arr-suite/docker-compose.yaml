@@ -1,0 +1,101 @@
+services:
+  portainer:
+    image: portainer/portainer-ce:latest
+    restart: unless-stopped
+    ports:
+      - 9443:9443
+    volumes:
+      - portainer_data:/data
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - arr_net
+  
+  flaresolverr:
+    image: ghcr.io/flaresolverr/flaresolverr:latest
+    restart: unless-stopped
+    ports:
+      - 8191:8191
+    environment:
+      - LOG_LEVEL=info
+      - LOG_HTML=false
+      - CAPTCHA_SOLVER=none
+    networks: 
+      - arr_net
+
+  prowlarr:
+    image: lscr.io/linuxserver/prowlarr:develop
+    restart: unless-stopped
+    ports: 
+      - 9696:9696
+    volumes:
+      - prowlarr_config:/config
+    environment:
+      - PUID=1000
+      - PGID=1000
+    networks:
+      - arr_net
+  
+  radarr:
+    image: lscr.io/linuxserver/radarr:latest
+    restart: unless-stopped
+    volumes:
+      - radarr_config:/config
+      - /mnt/all/movies:/data/movies
+      - /mnt/e:/data/downloads
+    ports:
+      - 7878:7878
+    environment:
+      - PUID=1000
+      - PGID=1000
+    networks:
+      - arr_net
+
+  sonarr:
+    image: lscr.io/linuxserver/sonarr:latest
+    restart: unless-stopped
+    volumes:
+      - sonarr_config:/config
+      - /mnt/all/series:/data/series
+      - /mnt/e:/data/downloads
+    ports:
+      - 8989:8989
+    environment:
+      - PUID=1000
+      - PGID=1000
+    networks:
+      - arr_net
+
+
+
+
+volumes:
+  portainer_data:
+    name: portainer_data
+    driver: local
+  prowlarr_config:
+    name: prowlarr_config
+    driver: local
+  radarr_config:
+    name: radarr_config
+    driver: local
+  radarr_data:
+    name: radarr_data
+    driver: local
+  sonarr_config:
+    name: sonar_config
+    driver: local
+  sonarr_data:
+    name: sonar_data
+    driver: local
+
+
+
+
+
+networks:
+  arr_net:
+    name: arr_net
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.18.0.0/24

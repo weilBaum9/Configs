@@ -1,0 +1,27 @@
+[include]
+	path = ~/.git_cred
+[alias]
+	co = checkout
+	br = branch
+	st = status
+	lg = log --graph --oneline
+	cam = commit -am
+
+[core]
+	editor = vim
+	pager = delta
+
+[delta]
+	line-numbers = false
+	side-by-side = true
+
+[interactive]
+	diffFilter = delta --color-only
+
+[merge]
+	conflictstyle = diff3
+
+[push]
+	autoSetupRemote = true
+[pull]
+	rebase = true
