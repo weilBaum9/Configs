@@ -61,7 +61,7 @@ alias unzipAll="extract"
 alias zipAll="ua"
 
 eval "$(zoxide init zsh --cmd cd)"
-eval $(thefuck --alias)
+
 
 
 ####################
