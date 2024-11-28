@@ -1,5 +1,5 @@
 [include]
-	path = ~/.git_cred
+	path = ~/.git_user
 [alias]
 	co = checkout
 	br = branch
